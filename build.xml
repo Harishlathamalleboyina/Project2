@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="TargetCheck" basedir="." default="init">
+<property file="build.properties"></property>
+<target name="init" depends="clean,create,compile,run"></target>
+<target name="checkjdk">
+<condition property="jdk18">
+<equals arg1="${ant.java.version}" arg2="${app.java.version}"></equals>
+</condition>
+</target>
+<target name="failcheckjdk" unless="jdk18">
+<fail message="jdk 1.9 is required"></fail>
+</target>
+<target name="clean">
+<delete dir="build/classes"></delete>
+<delete dir="build"></delete>
+</target>
+<target name="create">
+<mkdir dir="build"></mkdir>
+<mkdir dir="build/classes"></mkdir>
+</target>
+<target name="compile">
+<javac srcdir="src" destdir="build/classes"></javac>
+</target>
+<target name="run">
+<java classpath="build/classes" classname="com.targetcheck.test.Test"></java>
+</target>
+</project>
